@@ -31,8 +31,11 @@ public class SimpleQuoteServlet extends HttpServlet {
 		java.io.PrintWriter out= response.getWriter();
 		this.showButton(response);
 		if(request.getParameter("conversion").equals("bitcoin")) {
-			out.print("<h2>Hello</h2></body></html>");
+			out.print("<h2>\"bitcoin"+ 5000+ "</h2></body></html>");
+		}else if( request.getParameter("conversion").contentEquals("litcoin")) {
+			out.print("<h2>\"litcoin"+ 4000+ "</h2></body></html>");
 		}
+	
 		
 	}
 
@@ -45,8 +48,8 @@ public class SimpleQuoteServlet extends HttpServlet {
 		out.print("<option value=\"bitcoin\">Bitcoin</option>"
 				+ "<option value=\"litcoin\">Litcoin</option>"
 				+ "<option value=\"namecoin\">Namecoin</option></select>");
-		out.print( "<form action=\"http://localhost:8080/TP1/SimpleQuote\" methode=Post id='myForm'>"
-				+ "<input type=submit name=refresh value=\"refresh\"></form>");
+		out.print( "<form  methode=Post id='myForm'>"
+				+ "<input type=submit name=refresh value=\"refresh\"></form>"); // mettre de chemins relatifs
 	}
 	
 	/**
