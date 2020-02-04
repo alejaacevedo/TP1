@@ -31,9 +31,11 @@ public class SimpleQuoteServlet extends HttpServlet {
 		java.io.PrintWriter out= response.getWriter();
 		this.showButton(response);
 		if(request.getParameter("conversion").equals("bitcoin")) {
-			out.print("<h2>\"bitcoin"+ 5000+ "</h2></body></html>");
+			out.print("<h2>Bitcoin "+ 5000+ "</h2></body></html>");
 		}else if( request.getParameter("conversion").contentEquals("litcoin")) {
-			out.print("<h2>\"litcoin"+ 4000+ "</h2></body></html>");
+			out.print("<h2>Litcoin "+ 4000+ "</h2></body></html>");
+		}else if( request.getParameter("conversion").contentEquals("namecoin")) {
+			out.print("<h2> Namecoin"+ 2000+ "</h2></body></html>");
 		}
 	
 		
