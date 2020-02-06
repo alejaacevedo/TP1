@@ -3,6 +3,7 @@ package org.mines.douai.j2ee.tp.acevedo.servlet;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,12 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/SimpleQuote")
 public class SimpleQuoteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private HashMap<String,BigDecimal> cryptoCurrencies = new HashMap<String,BigDecimal>();
+	 
        
 	
-	public void updateValues() {
-		
-	}
+	public HashMap<String,BigDecimal> createMap() {
+		HashMap<String,BigDecimal> cryptoCurrencies = new HashMap<String,BigDecimal>();
+		Random rand = new Random();
+		cryptoCurrencies.put("Bitcoin", new BigDecimal(rand.nextInt(10000)));
+		cryptoCurrencies.put("Litecoin", new BigDecimal(rand.nextInt(100)));
+		cryptoCurrencies.put("Namecoin", new BigDecimal(rand.nextInt(30)));
+		return cryptoCurrencies;
+		}
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -38,9 +44,9 @@ public class SimpleQuoteServlet extends HttpServlet {
 		response.setContentType("text/html");
 		java.io.PrintWriter out= response.getWriter();
 		this.showButton(response, request);
-		if(request.getParameter("conversion").equals("bitcoin")) {
+		/*if(request.getParameter("conversion").equals("bitcoin")) {
 			out.print("<h2>Hello</h2></body></html>");
-		}
+		}*/
 		
 	}
 
@@ -48,14 +54,27 @@ public class SimpleQuoteServlet extends HttpServlet {
 	public void showButton(HttpServletResponse rep, HttpServletRequest req) throws IOException {
 		rep.setContentType("text/html");
 		java.io.PrintWriter out= rep.getWriter();
+		HashMap<String,BigDecimal> currencies= createMap();
+		String selection = req.getParameter("conversion");
+		
+	
 		out.print("<html><head><title>TP1</title></head>");
-		out.print("<body>"
-				+ "<select name=\"conversion\" form=\"myForm\">");
-		out.print("<option value=\"bitcoin\">Bitcoin</option>"
-				+ "<option value=\"litcoin\">Litcoin</option>"
-				+ "<option value=\"namecoin\">Namecoin</option></select>");
-		out.print( "<form action=\"http://localhost:8080/TP1/SimpleQuote\" methode=Post id='myForm'>"
+		out.print("<body><select name=\"conversion\" form=\"myForm\">");
+		for(String i: currencies.keySet()) {
+			if( selection != null && selection.equals(i)) {
+				out.print("<option value=\""+i+"\" selected>"+i+"</option>");
+				
+			}else {
+				out.print("<option value=\""+i+"\">"+i+"</option>");
+			}
+		}
+		out.print( "</select> <form  methode=Post id='myForm'>"
 				+ "<input type=submit name=refresh value=\"refresh\"></form>");
+		if(selection!= null) {
+		out.print("<p> Crypto: "+ selection + " value is: "+ currencies.get(selection)+ "</p>");
+		}
+		
+		
 	}
 	
 	/**
