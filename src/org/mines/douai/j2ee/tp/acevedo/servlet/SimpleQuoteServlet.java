@@ -42,16 +42,12 @@ public class SimpleQuoteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		java.io.PrintWriter out= response.getWriter();
-		this.showButton(response, request);
-		/*if(request.getParameter("conversion").equals("bitcoin")) {
-			out.print("<h2>Hello</h2></body></html>");
-		}*/
+		this.showListSelection(response, request);
 		
 	}
 
 	
-	public void showButton(HttpServletResponse rep, HttpServletRequest req) throws IOException {
+	public void showListSelection(HttpServletResponse rep, HttpServletRequest req) throws IOException {
 		rep.setContentType("text/html");
 		java.io.PrintWriter out= rep.getWriter();
 		HashMap<String,BigDecimal> currencies= createMap();
