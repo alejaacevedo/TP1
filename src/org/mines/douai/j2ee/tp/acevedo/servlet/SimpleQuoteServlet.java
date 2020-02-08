@@ -81,7 +81,8 @@ public class SimpleQuoteServlet extends HttpServlet {
 
 		}
 		java.io.PrintWriter out = response.getWriter();
-		out.println("<br/> Le montant en dollard de la devise est de " + currency.get(selection).setScale(4, BigDecimal.ROUND_HALF_UP) + " $");
+		out.println("<img src=\"/TP1/QuoteRating?conversion="+ request.getParameter("conversion")+"\"");
+		out.println("<p><br/> Le montant en dollard de la devise est de " + currency.get(selection).setScale(4, BigDecimal.ROUND_HALF_UP) + " $</p>");
 
 	}
 
