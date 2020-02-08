@@ -78,9 +78,9 @@ public class GraphicQuoteServlet extends HttpServlet {
 			// Draw on the image
 			g2d.setPaint(Color.red);
 			g2d.draw(drawPolyline(generatePoints("Bitcoin")));
-			g2d.translate(200, 100);
+			/*g2d.translate(200, 1);
 			g2d.scale(3.0, 3.0);
-			g2d.draw(drawPolyline(generatePoints("Bitcoin")));
+			g2d.draw(drawPolyline(generatePoints("Bitcoin")));*/
 			// Sauver l’image dans le flux de sortie
 			ImageIO.write(bufferedImage, "png", out);
 			g2d.dispose();
@@ -90,17 +90,17 @@ public class GraphicQuoteServlet extends HttpServlet {
 			Graphics2D g2d = bufferedImage.createGraphics();
 			// Draw on the image
 			g2d.setColor(Color.blue);
-			g2d.fill(new Ellipse2D.Float(0, 0, 200, 100));
+			g2d.draw(drawPolyline(generatePoints("Litecoin")));
 			// Sauver l’image dans le flux de sortie
 			ImageIO.write(bufferedImage, "png", out);
 			g2d.dispose();
-		} else {
+		} else if(selectedCurrency.equals("Namecoin")) {
 			ServletOutputStream out = response.getOutputStream();
 			BufferedImage bufferedImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2d = bufferedImage.createGraphics();
 			// Draw on the image
 			g2d.setColor(Color.green);
-			g2d.fill(new Ellipse2D.Float(0, 0, 200, 100));
+			g2d.draw(drawPolyline(generatePoints("Namecoin")));
 			// Sauver l’image dans le flux de sortie
 			ImageIO.write(bufferedImage, "png", out);
 			g2d.dispose();
