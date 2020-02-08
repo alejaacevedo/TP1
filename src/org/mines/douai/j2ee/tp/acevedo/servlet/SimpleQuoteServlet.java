@@ -3,7 +3,7 @@ package org.mines.douai.j2ee.tp.acevedo.servlet;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.Random;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,8 +43,7 @@ public class SimpleQuoteServlet extends HttpServlet {
 	public void showListSelection(HttpServletResponse rep, HttpServletRequest req) throws IOException {
 		rep.setContentType("text/html");
 		java.io.PrintWriter out = rep.getWriter();
-		this.bean = new ModelBean();
-		HashMap<String, BigDecimal> currencies = bean.getCryptoCurrency();
+		HashMap<String, BigDecimal> currencies = bean.updateCurrency();
 		String selection = req.getParameter("conversion");
 
 		out.print("<html><head><title>TP1</title></head>");
@@ -74,6 +73,7 @@ public class SimpleQuoteServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		String selection = "";
+		this.bean= new ModelBean();
 		HashMap<String, BigDecimal> currency = bean.getCryptoCurrency();
 		this.doGet(request, response);
 		if (request.getParameter("conversion") != null) {
@@ -82,7 +82,7 @@ public class SimpleQuoteServlet extends HttpServlet {
 		}
 		java.io.PrintWriter out = response.getWriter();
 		out.println("<img src=\"/TP1/QuoteRating?conversion="+ request.getParameter("conversion")+"\"");
-		out.println("<p><br/> Le montant en dollard de la devise est de " + currency.get(selection).setScale(4, BigDecimal.ROUND_HALF_UP) + " $</p>");
+		out.println("<p><br/> <br/> Le montant en dollard de la devise est de " + currency.get(selection).setScale(4, BigDecimal.ROUND_HALF_UP) + " $</p>");
 
 	}
 
