@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.mines.douai.j2ee.tp.acevedo.bean.ModelBean;
 
 /**
  * Servlet implementation class SimpleQuoteServlet
@@ -17,74 +18,71 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/SimpleQuote")
 public class SimpleQuoteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 
-       
-	
-	public HashMap<String,BigDecimal> createMap() {
-		HashMap<String,BigDecimal> cryptoCurrencies = new HashMap<String,BigDecimal>();
-		Random rand = new Random();
-		cryptoCurrencies.put("Bitcoin", new BigDecimal(rand.nextInt(10000)));
-		cryptoCurrencies.put("Litecoin", new BigDecimal(rand.nextInt(100)));
-		cryptoCurrencies.put("Namecoin", new BigDecimal(rand.nextInt(30)));
-		return cryptoCurrencies;
-		}
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SimpleQuoteServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	ModelBean bean;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		this.showListSelection(response, request);
-		
+	public SimpleQuoteServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+		this.showListSelection(response, request);
+
+	}
+
 	public void showListSelection(HttpServletResponse rep, HttpServletRequest req) throws IOException {
 		rep.setContentType("text/html");
-		java.io.PrintWriter out= rep.getWriter();
-		HashMap<String,BigDecimal> currencies= createMap();
+		java.io.PrintWriter out = rep.getWriter();
+		this.bean = new ModelBean();
+		HashMap<String, BigDecimal> currencies = bean.getCryptoCurrency();
 		String selection = req.getParameter("conversion");
-		
-	
+
 		out.print("<html><head><title>TP1</title></head>");
-		out.print("<body><select name=\"conversion\" form=\"myForm\">");
-		for(String i: currencies.keySet()) {
-			if( selection != null && selection.equals(i)) {
-				out.print("<option value=\""+i+"\" selected>"+i+"</option>");
-				
-			}else {
-				out.print("<option value=\""+i+"\">"+i+"</option>");
+		out.print("<body><form method=Post>\n" + "<select name=\"conversion\" >");
+		for (String i : currencies.keySet()) {
+			if (selection != null && selection.equals(i)) {
+				out.print("<option value=\"" + i + "\" selected>" + i + "</option>");
+
+			} else {
+				out.print("<option value=\"" + i + "\">" + i + "</option>");
 			}
 		}
-		out.print( "</select> <form  methode=Post id='myForm'>"
-				+ "<input type=submit name=refresh value=\"refresh\"></form>");
-		if(selection!= null) {
-		out.print("<p> Crypto: "+ selection + " value is: "+ currencies.get(selection)+ "</p>");
-		}
-		
-		
+		out.print("</select>" + "<input type=submit name=refresh value=\"refresh\"></form>");
+		/*
+		 * if(selection!= null) { out.print("<p> Crypto: "+ selection + " value is: "+
+		 * currencies.get(selection)+ "</p>"); }
+		 */
+
 	}
-	
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		if(request.getParameter("refresh") != null) {
-			doGet(request, response);
-			}
-			
-			
-		
+
+		String selection = "";
+		HashMap<String, BigDecimal> currency = bean.getCryptoCurrency();
+		this.doGet(request, response);
+		if (request.getParameter("conversion") != null) {
+			selection = request.getParameter("conversion");
+
+		}
+		java.io.PrintWriter out = response.getWriter();
+		out.println("<br/> Le montant en dollard de la devise est de " + currency.get(selection).setScale(4, BigDecimal.ROUND_HALF_UP) + " $");
+
 	}
 
 }
